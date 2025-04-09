@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useRef } from 'react';
+import html2canvas from 'html2canvas';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
@@ -92,9 +93,42 @@ function App() {
     setLocations(newLocations);
   }, []);
 
+  const handleDownloadMap = useCallback(async () => {
+    if (!locations.length) return;
+    
+    const mapElement = document.querySelector('.map-wrapper');
+    if (!mapElement) return;
+
+    try {
+      const canvas = await html2canvas(mapElement, {
+        useCORS: true,
+        allowTaint: true,
+        backgroundColor: '#f4d03f'
+      });
+      
+      const link = document.createElement('a');
+      link.download = 'treasure-map.png';
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    } catch (error) {
+      console.error('Error generating map image:', error);
+    }
+  }, [locations]);
+
   return (
     <div className="app-container">
-      <SearchForm onLocationsSelected={handleLocationsSelected} />
+      <div className="form-container">
+        <SearchForm onLocationsSelected={handleLocationsSelected} />
+        {locations.length > 0 && (
+          <button
+            className="download-button"
+            onClick={handleDownloadMap}
+            title="Download Map"
+          >
+            📥
+          </button>
+        )}
+      </div>
       <div className="map-container">
         <div className="map-wrapper" style={{ height: '100%' }}>
           <MapContainer 
@@ -102,6 +136,7 @@ function App() {
             center={[37.7749, -122.4194]} 
             zoom={12} 
             scrollWheelZoom={true}
+            zoomControl={false}
             style={{ background: '#f4d03f' }}
           >
             <MapController locations={locations} />

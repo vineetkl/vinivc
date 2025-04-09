@@ -31,6 +31,36 @@ body {
   overflow: hidden;
 }
 
+.form-container {
+  position: relative;
+  width: min(65vh, 90vw);
+}
+
+.download-button {
+  position: absolute;
+  right: -50px;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 12px;
+  background: #f4d03f;
+  border: 2px solid #8b4513;
+  border-radius: 4px;
+  font-family: system-ui;
+  font-size: 1.2em;
+  color: #8b4513;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.download-button:hover {
+  background: #8b4513;
+  color: #f4d03f;
+}
+
 .search-form {
   background: #2C1810;
   padding: 1.5vh;
