@@ -1,0 +1,9 @@
+{
+  "short_name": "Goose Map",
+  "name": "Goose Treasure Map Maker",
+  "icons": [],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#f4d03f",
+  "background_color": "#2C1810"
+}
