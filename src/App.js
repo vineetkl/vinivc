@@ -60,7 +60,7 @@ function MapController({ locations }) {
       const updatePath = async () => {
         try {
           const response = await fetch(
-            `https://router.project-osrm.org/route/v1/driving/${start[1]},${start[0]};${end[1]},${end[0]}?overview=full&geometries=geojson`
+            `https://router.project-osrm.org/route/v1/driving/${start[1]},${start[0]};${end[1]},${end[0]}?overview=full&geometries=geojson&access_token=be82a573-0ad7-4a1a-bf21-4b7bd0057fb1`
           );
           const data = await response.json();
           
@@ -107,7 +107,7 @@ function App() {
             <MapController locations={locations} />
             <TileLayer
               attribution='Map tiles by <a href="http://stamen.com">Stamen Design</a>'
-              url="https://tiles.stadiamaps.com/tiles/stamen_watercolor/{z}/{x}/{y}.jpg"
+              url="https://tiles.stadiamaps.com/tiles/stamen_watercolor/{z}/{x}/{y}.jpg?api_key=be82a573-0ad7-4a1a-bf21-4b7bd0057fb1"
             />
             {locations.map((position, index) => (
               <Marker 
