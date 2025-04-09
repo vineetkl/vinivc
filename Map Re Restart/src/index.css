@@ -1,0 +1,220 @@
+@import '@fontsource/pirata-one';
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: 'Pirata One', cursive;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: #3E2723;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  height: 100vh;
+  padding: 2vh 2vh 4vh 2vh;
+  gap: 3vh;
+  overflow: hidden;
+}
+
+.search-form {
+  background: #2C1810;
+  padding: 1.5vh;
+  border-radius: 8px;
+  width: min(65vh, 90vw);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  flex-shrink: 0;
+  margin-bottom: 0;
+  border: 2px solid #1F110B;
+}
+
+.search-form h1 {
+  color: #f4d03f;
+  text-align: center;
+  margin-bottom: 1vh;
+  font-size: min(2em, 5vw);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.search-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 1vh;
+  margin-bottom: 1vh;
+}
+
+.input-group {
+  position: relative;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #8b4513;
+  border-radius: 4px;
+  background: #fff9e6;
+  font-family: 'Pirata One', cursive;
+  font-size: 1.1em;
+  color: #8b4513;
+}
+
+.suggestions-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: #fff9e6;
+  border: 2px solid #8b4513;
+  border-top: none;
+  border-radius: 0 0 4px 4px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 1000;
+}
+
+.suggestions-list li {
+  padding: 8px 12px;
+  cursor: pointer;
+  color: #8b4513;
+}
+
+.suggestions-list li:hover {
+  background: #f4d03f;
+}
+
+.button-group {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  align-items: center;
+}
+
+.create-map-button {
+  flex: 1;
+  padding: 12px;
+  background: #f4d03f;
+  border: 2px solid #8b4513;
+  border-radius: 4px;
+  font-family: 'Pirata One', cursive;
+  font-size: 1.2em;
+  color: #8b4513;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.dice-button {
+  padding: 12px;
+  background: #f4d03f;
+  border: 2px solid #8b4513;
+  border-radius: 4px;
+  font-family: system-ui;
+  font-size: 1.2em;
+  color: #8b4513;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.create-map-button:hover {
+  background: #8b4513;
+  color: #f4d03f;
+}
+
+.create-map-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.map-container {
+  width: min(65vh, 90vw);
+  height: min(65vh, 90vw);
+  position: relative;
+  margin: 0;
+  flex-shrink: 0;
+  padding-bottom: max(2vh, 20px);
+}
+
+.map-wrapper {
+  width: 100%;
+  height: 100%;
+  width: 100%;
+}
+
+.leaflet-container {
+  width: 100%;
+  height: 100%;
+  border: 4px solid #1F110B;
+  border-radius: 8px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.treasure-popup {
+  font-family: 'Pirata One', cursive;
+  font-size: 1.2em;
+  text-align: center;
+  color: #8b4513;
+}
+
+.treasure-popup .leaflet-popup-content-wrapper {
+  background: #f4d03f;
+  border: 2px solid #8b4513;
+}
+
+.treasure-popup .leaflet-popup-tip {
+  background: #f4d03f;
+}
+
+.watercolor-marker {
+  background: none;
+  border: none;
+}
+
+.watercolor-icon {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.4));
+  transform-origin: bottom center;
+  animation: float 3s ease-in-out infinite;
+  z-index: 1000;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+.compass-rose {
+  position: absolute;
+  bottom: 30px;
+  right: 30px;
+  width: 100px;
+  height: 100px;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="none" stroke="%238b4513" stroke-width="2"/><path d="M50 5L55 50L50 95L45 50Z" fill="%238b4513"/><path d="M5 50L50 45L95 50L50 55Z" fill="%238b4513"/></svg>');
+  pointer-events: none;
+  opacity: 0.8;
+}
