@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 
-function SearchForm({ onLocationsSelected, onDownloadMap }) {
+function SearchForm({ onLocationsSelected, onDownloadMap, onAddPin, onFlipLocations, isAddingPin, activeInput }) {
   const [startQuery, setStartQuery] = useState('');
   const [endQuery, setEndQuery] = useState('');
   const [startSuggestions, setStartSuggestions] = useState([]);
@@ -172,21 +172,30 @@ function SearchForm({ onLocationsSelected, onDownloadMap }) {
       <h1>Treasure Map Creator</h1>
       <div className="search-inputs">
         <div className="input-group">
-          <input
-            value={startQuery}
-            onChange={(e) => {
-              setStartQuery(e.target.value);
-              if (startSuggestions.length > 0) {
-                setStartSuggestions([]);
-              }
-            }}
-            onKeyDown={(e) => {
-              if (e.key === 'Escape') {
-                setStartSuggestions([]);
-              }
-            }}
-            placeholder="Enter starting location"
-          />
+          <div className="input-with-pin">
+            <input
+              value={startQuery}
+              onChange={(e) => {
+                setStartQuery(e.target.value);
+                if (startSuggestions.length > 0) {
+                  setStartSuggestions([]);
+                }
+              }}
+              onKeyDown={(e) => {
+                if (e.key === 'Escape') {
+                  setStartSuggestions([]);
+                }
+              }}
+              placeholder="Enter starting location"
+            />
+            <button
+              className={`pin-button ${isAddingPin && activeInput === 'start' ? 'active' : ''}`}
+              onClick={() => onAddPin('start')}
+              title="Place start location on map"
+            >
+              📍
+            </button>
+          </div>
           {startSuggestions.length > 0 && (
             <ul className="suggestions-list">
               {startSuggestions.map((suggestion) => (
@@ -201,21 +210,30 @@ function SearchForm({ onLocationsSelected, onDownloadMap }) {
           )}
         </div>
         <div className="input-group">
-          <input
-            value={endQuery}
-            onChange={(e) => {
-              setEndQuery(e.target.value);
-              if (endSuggestions.length > 0) {
-                setEndSuggestions([]);
-              }
-            }}
-            onKeyDown={(e) => {
-              if (e.key === 'Escape') {
-                setEndSuggestions([]);
-              }
-            }}
-            placeholder="Enter treasure location"
-          />
+          <div className="input-with-pin">
+            <input
+              value={endQuery}
+              onChange={(e) => {
+                setEndQuery(e.target.value);
+                if (endSuggestions.length > 0) {
+                  setEndSuggestions([]);
+                }
+              }}
+              onKeyDown={(e) => {
+                if (e.key === 'Escape') {
+                  setEndSuggestions([]);
+                }
+              }}
+              placeholder="Enter treasure location"
+            />
+            <button
+              className={`pin-button ${isAddingPin && activeInput === 'end' ? 'active' : ''}`}
+              onClick={() => onAddPin('end')}
+              title="Place treasure location on map"
+            >
+              📍
+            </button>
+          </div>
           {endSuggestions.length > 0 && (
             <ul className="suggestions-list">
               {endSuggestions.map((suggestion) => (
@@ -245,6 +263,16 @@ function SearchForm({ onLocationsSelected, onDownloadMap }) {
         >
           🎲
         </button>
+
+        {onFlipLocations && (
+          <button
+            className="dice-button"
+            onClick={onFlipLocations}
+            title="Flip start and end locations"
+          >
+            🔄
+          </button>
+        )}
         {onDownloadMap && (
           <button
             className="dice-button"
