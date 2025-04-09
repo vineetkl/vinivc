@@ -7,7 +7,6 @@ function SearchForm({ onLocationsSelected }) {
   const [endSuggestions, setEndSuggestions] = useState([]);
   const [startLocation, setStartLocation] = useState(null);
   const [endLocation, setEndLocation] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
 
   const searchPlaces = useCallback(async (query, setResults) => {
     const trimmedQuery = query.trim();
@@ -17,7 +16,6 @@ function SearchForm({ onLocationsSelected }) {
     }
 
     try {
-      setIsLoading(true);
       const response = await fetch(
         `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=5&accept-language=en`
       );
@@ -27,8 +25,6 @@ function SearchForm({ onLocationsSelected }) {
     } catch (error) {
       console.error('Search error:', error);
       setResults([]);
-    } finally {
-      setIsLoading(false);
     }
   }, []);
 
@@ -126,7 +122,6 @@ function SearchForm({ onLocationsSelected }) {
   };
 
   const handleRandomLocations = async () => {
-    setIsLoading(true);
     try {
       // Try different areas until we find valid land points
       let validPoints = false;
@@ -163,8 +158,6 @@ function SearchForm({ onLocationsSelected }) {
       }
     } catch (error) {
       console.error('Error generating random locations:', error);
-    } finally {
-      setIsLoading(false);
     }
   };
 
