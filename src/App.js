@@ -48,12 +48,13 @@ function MapController({ locations }) {
       map.fitBounds(bounds, { padding: [50, 50] });
 
       // Create new path with updated style
+      // Create new path with dashed style
       pathRef.current = L.polyline([], {
-        color: '#000000',  // Black color
-        weight: 8,        // Thick line
-        opacity: 0.9,     // High opacity
-        dashArray: '8, 16',  // 8px dash with 16px gap
-        lineCap: 'round'
+        color: '#000000',
+        weight: 4,
+        dashArray: '10, 10',
+        opacity: 0.9,
+        smoothFactor: 1
       }).addTo(map);
 
       // Update path with new coordinates
@@ -61,7 +62,7 @@ function MapController({ locations }) {
       const updatePath = async () => {
         try {
           const response = await fetch(
-            `https://router.project-osrm.org/route/v1/driving/${start[1]},${start[0]};${end[1]},${end[0]}?overview=full&geometries=geojson&access_token=be82a573-0ad7-4a1a-bf21-4b7bd0057fb1`
+            `https://router.project-osrm.org/route/v1/driving/${start[1]},${start[0]};${end[1]},${end[0]}?overview=full&geometries=geojson`
           );
           const data = await response.json();
           
@@ -96,7 +97,7 @@ function App() {
   const handleDownloadMap = useCallback(async () => {
     if (!locations.length) return;
     
-    const mapElement = document.querySelector('.map-wrapper');
+    const mapElement = document.querySelector('.leaflet-container');
     if (!mapElement) return;
 
     try {
@@ -117,18 +118,10 @@ function App() {
 
   return (
     <div className="app-container">
-      <div className="form-container">
-        <SearchForm onLocationsSelected={handleLocationsSelected} />
-        {locations.length > 0 && (
-          <button
-            className="download-button"
-            onClick={handleDownloadMap}
-            title="Download Map"
-          >
-            📥
-          </button>
-        )}
-      </div>
+      <SearchForm 
+        onLocationsSelected={handleLocationsSelected} 
+        onDownloadMap={locations.length > 0 ? handleDownloadMap : null}
+      />
       <div className="map-container">
         <div className="map-wrapper" style={{ height: '100%' }}>
           <MapContainer 

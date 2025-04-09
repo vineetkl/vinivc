@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 
-function SearchForm({ onLocationsSelected }) {
+function SearchForm({ onLocationsSelected, onDownloadMap }) {
   const [startQuery, setStartQuery] = useState('');
   const [endQuery, setEndQuery] = useState('');
   const [startSuggestions, setStartSuggestions] = useState([]);
@@ -245,6 +245,15 @@ function SearchForm({ onLocationsSelected }) {
         >
           🎲
         </button>
+        {onDownloadMap && (
+          <button
+            className="dice-button"
+            onClick={onDownloadMap}
+            title="Download Map"
+          >
+            📥
+          </button>
+        )}
       </div>
     </div>
   );
